@@ -1,10 +1,12 @@
-
 name: Build Electron App
 on: [push]
 
 jobs:
   build:
     runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: ./project  # تأكد أن هذا هو اسم المجلد الذي يحتوي ملفاتك
     steps:
       - name: Checkout
         uses: actions/checkout@v4
