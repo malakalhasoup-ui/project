@@ -8,19 +8,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: List files to find package.json
-        run: dir /s package.json
+      - name: Show all files
+        run: dir /s /b
         shell: cmd
 
       - name: Install dependencies
-        run: |
-          # العثور على المجلد الذي يحتوي على package.json
-          for /f "delims=" %%i in ('dir /s /b package.json') do set "pkg_dir=%%~dpi"
-          cd "%pkg_dir%"
-          npm install
+        run: npm install
+        # سنقوم بتعديل هذا السطر بناءً على نتيجة الخطوة السابقة
 
       - name: Build
-        run: |
-          for /f "delims=" %%i in ('dir /s /b package.json') do set "pkg_dir=%%~dpi"
-          cd "%pkg_dir%"
-          npm run electron:build
+        run: npm run electron:build
