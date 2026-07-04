@@ -8,15 +8,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
+      - name: List files to find package.json
+        run: dir /s package.json
+        shell: cmd
 
       - name: Install dependencies
-        run: npm install
-        working-directory: ./army  # هذا السطر يجبره على الدخول لمجلد army
+        run: |
+          # العثور على المجلد الذي يحتوي على package.json
+          for /f "delims=" %%i in ('dir /s /b package.json') do set "pkg_dir=%%~dpi"
+          cd "%pkg_dir%"
+          npm install
 
       - name: Build
-        run: npm run electron:build
-        working-directory: ./army  # هذا السطر يضمن تنفيذ البناء داخل المجلد الصحيح
+        run: |
+          for /f "delims=" %%i in ('dir /s /b package.json') do set "pkg_dir=%%~dpi"
+          cd "%pkg_dir%"
+          npm run electron:build
