@@ -4,9 +4,6 @@ on: [push]
 jobs:
   build:
     runs-on: windows-latest
-    defaults:
-      run:
-        working-directory: ./army  # هنا قمنا بتعديل المسار ليكون army
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -18,6 +15,8 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+        working-directory: ./army  # هذا السطر يجبره على الدخول لمجلد army
 
       - name: Build
         run: npm run electron:build
+        working-directory: ./army  # هذا السطر يضمن تنفيذ البناء داخل المجلد الصحيح
