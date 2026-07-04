@@ -6,7 +6,7 @@ jobs:
     runs-on: windows-latest
     defaults:
       run:
-        working-directory: ./project  # تأكد أن هذا هو اسم المجلد الذي يحتوي ملفاتك
+        working-directory: ./army  # هنا قمنا بتعديل المسار ليكون army
     steps:
       - name: Checkout
         uses: actions/checkout@v4
