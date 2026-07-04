@@ -8,13 +8,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Show all files
-        run: dir /s /b
+      - name: Find and build
         shell: cmd
-
-      - name: Install dependencies
-        run: npm install
-        # سنقوم بتعديل هذا السطر بناءً على نتيجة الخطوة السابقة
-
-      - name: Build
-        run: npm run electron:build
+        run: |
+          echo "Searching for package.json..."
+          dir /s /b package.json
+          for /f "delims=" %%i in ('dir /s /b package.json') do (
+            echo "Found at: %%~dpi"
+            cd "%%~dpi"
+            call npm install
+            call npm run electron:build
+          )
